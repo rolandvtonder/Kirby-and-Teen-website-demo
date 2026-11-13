@@ -5,7 +5,7 @@ import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import Faq from '../../components/Faq.astro';
 import CtaBand from '../../components/CtaBand.astro';
-import {photo, teamPhoto} from '../../lib/photos';
+import {photo, facePosition, teamPhoto} from '../../lib/photos';
 import {faqSchema} from '../../lib/schema';
 import {services, type ServiceCategory} from '../../data/services';
 import {member} from '../../data/team';
@@ -133,7 +133,7 @@ const serviceSchema = {
           <ul class="mt-12 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-4">
             {people.map((m, i) => (
               <li data-reveal style={`--d:${(i % 4) * 0.07}s`}>
-                <Image src={teamPhoto(m!.photo)} alt={`${m!.name}, ${m!.role.toLowerCase()} at Kirby and Teen`} widths={[300, 600]} sizes="(min-width: 768px) 22vw, 48vw" class="aspect-[4/5] w-full object-cover" style={`object-position:${m!.pos ?? '50% 30%'}`} />
+                <Image src={teamPhoto(m!.photo)} alt={`${m!.name}, ${m!.role.toLowerCase()} at Kirby and Teen`} widths={[300, 600]} sizes="(min-width: 768px) 22vw, 48vw" class="aspect-[4/5] w-full object-cover" style={`object-position:${facePosition(teamPhoto(m!.photo), m!.face)}`} />
                 <h3 class="display mt-4 text-[28px]">{m!.name}</h3>
                 <p class="caps text-muted">{m!.role}</p>
                 <p class="mt-2 text-[15px] leading-relaxed text-muted">{m!.bio}</p>

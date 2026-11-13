@@ -5,7 +5,7 @@ import HomeHero from '../components/HomeHero.astro';
 import Panels from '../components/Panels.astro';
 import Faq from '../components/Faq.astro';
 import CtaBand from '../components/CtaBand.astro';
-import {photo, teamPhoto} from '../lib/photos';
+import {photo, facePosition, teamPhoto} from '../lib/photos';
 import {faqSchema} from '../lib/schema';
 import {fullAddress, hours, site, whatsappLink, yearsOpen} from '../data/site';
 import {services} from '../data/services';
@@ -165,7 +165,7 @@ const people = team.slice(0, 4);
         {
           people.map((m, i) => (
             <li data-reveal style={`--d:${i * 0.07}s`}>
-              <Image src={teamPhoto(m.photo)} alt={`${m.name}, ${m.role.toLowerCase()} at Kirby and Teen`} widths={[300, 600]} sizes="(min-width: 768px) 22vw, 48vw" class="aspect-[4/5] w-full object-cover" style={`object-position:${m.pos ?? '50% 30%'}`} />
+              <Image src={teamPhoto(m.photo)} alt={`${m.name}, ${m.role.toLowerCase()} at Kirby and Teen`} widths={[300, 600]} sizes="(min-width: 768px) 22vw, 48vw" class="aspect-[4/5] w-full object-cover" style={`object-position:${facePosition(teamPhoto(m.photo), m.face)}`} />
               <p class="display mt-4 text-[28px]">{m.name}</p>
               <p class="caps text-muted">{m.role}</p>
             </li>
