@@ -1,0 +1,513 @@
+[
+  {
+    "slug": "kirby-and-teen-salon-pedicure-lounge-table-view",
+    "cat": "salon",
+    "alt": "The Kirby and Teen boutique in Table View: four grey pedicure recliners beneath a chocolate-brown arch, rattan pendant lights and the private treatment room door",
+    "w": 1482,
+    "h": 720
+  },
+  {
+    "slug": "candlelit-massage-room",
+    "cat": "salon",
+    "alt": "Candlelit massage room at Kirby and Teen with a made-up treatment bed, warm lamps and a tea set",
+    "w": 1440,
+    "h": 1753
+  },
+  {
+    "slug": "massage-therapist-treatment-room",
+    "cat": "salon",
+    "alt": "A Kirby and Teen therapist standing in the calm, softly lit massage treatment room",
+    "w": 1440,
+    "h": 1440
+  },
+  {
+    "slug": "massage-room-mirror-ambient-light",
+    "cat": "salon",
+    "alt": "Quiet massage room with a round mirror and soft red ambient lighting",
+    "w": 1440,
+    "h": 1753
+  },
+  {
+    "slug": "burgundy-gel-nails-kirby-plaque",
+    "cat": "colour",
+    "alt": "Glossy deep burgundy gel nails held over the clear Nails by Kirby and Teen plaque",
+    "w": 1280,
+    "h": 1280
+  },
+  {
+    "slug": "sheer-nude-gel-overlay",
+    "cat": "nude",
+    "alt": "Sheer nude pink gel overlay on natural almond nails",
+    "w": 960,
+    "h": 1200
+  },
+  {
+    "slug": "chrome-abstract-nail-art",
+    "cat": "art",
+    "alt": "Silver chrome abstract nail art over a nude base on almond nails",
+    "w": 1200,
+    "h": 1200
+  },
+  {
+    "slug": "micro-french-almond-nails",
+    "cat": "nude",
+    "alt": "Fine white micro French tips on long almond nails",
+    "w": 1280,
+    "h": 1280
+  },
+  {
+    "slug": "purple-glitter-swirl-nail-art",
+    "cat": "art",
+    "alt": "Purple glitter almond nails with hand-painted swirl accent nails",
+    "w": 1200,
+    "h": 1500
+  },
+  {
+    "slug": "teal-gel-nails",
+    "cat": "colour",
+    "alt": "Deep teal glossy gel nails on short almond shape",
+    "w": 1200,
+    "h": 1200
+  },
+  {
+    "slug": "soft-pink-gel-nails",
+    "cat": "nude",
+    "alt": "Soft baby pink gel nails on short square shape",
+    "w": 1280,
+    "h": 1600
+  },
+  {
+    "slug": "bright-purple-square-nails",
+    "cat": "colour",
+    "alt": "Bright violet gel nails on short square acrylic set",
+    "w": 960,
+    "h": 1200
+  },
+  {
+    "slug": "white-nails-gold-swirl-art",
+    "cat": "art",
+    "alt": "Milky white almond nails with a gold line swirl accent",
+    "w": 960,
+    "h": 1199
+  },
+  {
+    "slug": "dark-cherry-gel-manicure",
+    "cat": "colour",
+    "alt": "Dark cherry gel manicure with a high-shine finish",
+    "w": 1200,
+    "h": 1499
+  },
+  {
+    "slug": "pastel-rainbow-nails",
+    "cat": "art",
+    "alt": "Pastel pink, lilac and blue nails with gold script nail art",
+    "w": 960,
+    "h": 1200
+  },
+  {
+    "slug": "tortoiseshell-french-tips",
+    "cat": "art",
+    "alt": "Nude nails with tortoiseshell French tips",
+    "w": 1200,
+    "h": 1500
+  },
+  {
+    "slug": "milky-white-brown-tip-nails",
+    "cat": "art",
+    "alt": "Milky white nails with delicate brown French tips",
+    "w": 1200,
+    "h": 1500
+  },
+  {
+    "slug": "mocha-gel-nails",
+    "cat": "colour",
+    "alt": "Warm mocha brown gel nails on a relaxed hand",
+    "w": 1440,
+    "h": 1796
+  },
+  {
+    "slug": "gold-chrome-nail-art",
+    "cat": "art",
+    "alt": "Nude almond nails with sculpted gold chrome nail art",
+    "w": 1200,
+    "h": 1598
+  },
+  {
+    "slug": "rose-nude-almond-nails",
+    "cat": "nude",
+    "alt": "Rose nude almond nails with a glassy gel finish",
+    "w": 1350,
+    "h": 1800
+  },
+  {
+    "slug": "classic-french-almond-gel",
+    "cat": "nude",
+    "alt": "Classic white French tips on almond gel nails",
+    "w": 1350,
+    "h": 1800
+  },
+  {
+    "slug": "lilac-pink-gel-nails",
+    "cat": "nude",
+    "alt": "Lilac pink almond gel nails",
+    "w": 1350,
+    "h": 1800
+  },
+  {
+    "slug": "lilac-pink-almond-nails-close",
+    "cat": "nude",
+    "alt": "Close-up of glossy lilac pink almond nails",
+    "w": 1350,
+    "h": 1800
+  },
+  {
+    "slug": "hot-pink-gel-nails",
+    "cat": "colour",
+    "alt": "Hot pink gel manicure on short nails",
+    "w": 1350,
+    "h": 1800
+  },
+  {
+    "slug": "silver-glitter-accent-nails",
+    "cat": "art",
+    "alt": "White and nude nails with a silver glitter accent nail",
+    "w": 1351,
+    "h": 1800
+  },
+  {
+    "slug": "classic-red-gel-manicure",
+    "cat": "colour",
+    "alt": "Classic red gel manicure on short rounded nails",
+    "w": 1350,
+    "h": 1800
+  },
+  {
+    "slug": "polka-dot-nail-art",
+    "cat": "art",
+    "alt": "Nude nails with tiny black polka dot nail art",
+    "w": 1179,
+    "h": 1572
+  },
+  {
+    "slug": "pearl-french-tip-nails",
+    "cat": "art",
+    "alt": "Nude almond nails with pearl bead French tips",
+    "w": 1179,
+    "h": 1572
+  },
+  {
+    "slug": "pink-bow-nail-art",
+    "cat": "art",
+    "alt": "Pale pink nails with fine black bow nail art",
+    "w": 1013,
+    "h": 1013
+  },
+  {
+    "slug": "red-almond-nails-heart",
+    "cat": "colour",
+    "alt": "Glossy red almond nails with a heart accent",
+    "w": 1440,
+    "h": 1440
+  },
+  {
+    "slug": "red-almond-gel-nails",
+    "cat": "colour",
+    "alt": "Bold red almond gel nails",
+    "w": 960,
+    "h": 960
+  },
+  {
+    "slug": "plaid-burgundy-nail-art",
+    "cat": "art",
+    "alt": "Burgundy and nude nails with hand-painted plaid nail art",
+    "w": 960,
+    "h": 960
+  },
+  {
+    "slug": "chrome-nude-nails-christmas",
+    "cat": "nude",
+    "alt": "Pearly chrome nude nails in front of a Christmas tree",
+    "w": 1440,
+    "h": 1440
+  },
+  {
+    "slug": "pink-nails-bow-detail",
+    "cat": "art",
+    "alt": "Pink almond nails with a delicate hand-drawn bow",
+    "w": 1200,
+    "h": 1200
+  },
+  {
+    "slug": "festive-red-christmas-nail-art",
+    "cat": "art",
+    "alt": "Festive red and nude Christmas nail art with candy canes and gift bows",
+    "w": 960,
+    "h": 960
+  },
+  {
+    "slug": "red-nails-ribbon-nail-art",
+    "cat": "art",
+    "alt": "Glossy red almond nails with white ribbon bow nail art",
+    "w": 1054,
+    "h": 1054
+  },
+  {
+    "slug": "nude-almond-nails-gold-jewellery",
+    "cat": "nude",
+    "alt": "Nude almond nails with gold rings and a bracelet",
+    "w": 1440,
+    "h": 1440
+  },
+  {
+    "slug": "soft-french-nails-mirror",
+    "cat": "nude",
+    "alt": "Soft pink French nails resting by a round mirror and gold watch",
+    "w": 1179,
+    "h": 1179
+  },
+  {
+    "slug": "lash-extensions-application",
+    "cat": "lashbrow",
+    "alt": "Lash technician applying lash extensions with tweezers",
+    "w": 1080,
+    "h": 1350
+  },
+  {
+    "slug": "brow-lamination-result",
+    "cat": "lashbrow",
+    "alt": "Fluffy, brushed-up brows after a brow lamination treatment",
+    "w": 1080,
+    "h": 1350
+  },
+  {
+    "slug": "lash-extensions-close-up",
+    "cat": "lashbrow",
+    "alt": "Close-up of soft, full lash extensions",
+    "w": 1080,
+    "h": 1350
+  },
+  {
+    "slug": "nail-repair-pink-almond",
+    "cat": "nude",
+    "alt": "Repaired pink almond nails after a nail breakage fix",
+    "w": 1080,
+    "h": 1350
+  },
+  {
+    "slug": "nude-nails-steering-wheel",
+    "cat": "nude",
+    "alt": "Sheer nude almond nails on a steering wheel",
+    "w": 1320,
+    "h": 1320
+  },
+  {
+    "slug": "milky-pink-short-nails",
+    "cat": "nude",
+    "alt": "Milky pink gel overlay on short natural nails",
+    "w": 1440,
+    "h": 1440
+  },
+  {
+    "slug": "hot-pink-initial-nail-art",
+    "cat": "art",
+    "alt": "Hot pink almond nails with hand-painted initial nail art",
+    "w": 1200,
+    "h": 1200
+  },
+  {
+    "slug": "milky-white-almond-nails",
+    "cat": "nude",
+    "alt": "Milky white almond nails over the Kirby and Teen plaque",
+    "w": 960,
+    "h": 960
+  },
+  {
+    "slug": "baby-french-almond-nails",
+    "cat": "nude",
+    "alt": "Baby pink almond nails with crisp white French tips",
+    "w": 1200,
+    "h": 1200
+  },
+  {
+    "slug": "pale-pink-square-nails",
+    "cat": "nude",
+    "alt": "Pale pink gel nails on short square shape",
+    "w": 960,
+    "h": 960
+  },
+  {
+    "slug": "glazed-pink-chrome-nails",
+    "cat": "nude",
+    "alt": "Glazed pink chrome almond nails",
+    "w": 1179,
+    "h": 1179
+  },
+  {
+    "slug": "teal-almond-gel-nails",
+    "cat": "colour",
+    "alt": "Teal almond gel nails on the Kirby and Teen plaque",
+    "w": 1200,
+    "h": 1200
+  },
+  {
+    "slug": "nude-to-white-ombre-nails",
+    "cat": "nude",
+    "alt": "Nude to white ombre stiletto nails",
+    "w": 905,
+    "h": 905
+  },
+  {
+    "slug": "nude-nails-designer-bag",
+    "cat": "nude",
+    "alt": "Nude almond nails resting on a designer handbag",
+    "w": 1200,
+    "h": 1200
+  },
+  {
+    "slug": "natural-pink-acrylic-set",
+    "cat": "nude",
+    "alt": "Natural pink acrylic set on medium coffin nails",
+    "w": 960,
+    "h": 960
+  },
+  {
+    "slug": "white-french-stiletto-nails",
+    "cat": "nude",
+    "alt": "Sharp white French tips on sheer pink almond nails",
+    "w": 1440,
+    "h": 1440
+  },
+  {
+    "slug": "peach-almond-gel-nails",
+    "cat": "nude",
+    "alt": "Peach nude almond gel nails",
+    "w": 1440,
+    "h": 1440
+  },
+  {
+    "slug": "white-coffin-nails",
+    "cat": "colour",
+    "alt": "Solid white coffin gel nails",
+    "w": 960,
+    "h": 960
+  },
+  {
+    "slug": "peach-glitter-nails-evening",
+    "cat": "nude",
+    "alt": "Peach nails with subtle glitter photographed in evening light",
+    "w": 1200,
+    "h": 1600
+  },
+  {
+    "slug": "oxblood-gel-nails",
+    "cat": "colour",
+    "alt": "Oxblood gel nails on long almond shape",
+    "w": 1180,
+    "h": 1573
+  },
+  {
+    "slug": "red-french-tip-nails",
+    "cat": "art",
+    "alt": "Nude almond nails with bright red French tips",
+    "w": 1320,
+    "h": 1760
+  },
+  {
+    "slug": "burgundy-almond-nails-knit",
+    "cat": "colour",
+    "alt": "Burgundy almond nails against a brown knit sleeve",
+    "w": 1350,
+    "h": 1800
+  },
+  {
+    "slug": "mismatched-jewel-tone-nails",
+    "cat": "colour",
+    "alt": "Jewel-tone mismatched nails in blue, green and nude",
+    "w": 1080,
+    "h": 1440
+  },
+  {
+    "slug": "soft-pink-short-nails",
+    "cat": "nude",
+    "alt": "Soft pink short gel nails",
+    "w": 1290,
+    "h": 1720
+  },
+  {
+    "slug": "glass-french-almond-nails",
+    "cat": "nude",
+    "alt": "Glassy nude almond nails with white French tips",
+    "w": 720,
+    "h": 959
+  },
+  {
+    "slug": "pink-star-glitter-nail-art",
+    "cat": "art",
+    "alt": "Pink and peach nails with gold star and glitter nail art",
+    "w": 1351,
+    "h": 1800
+  },
+  {
+    "slug": "white-polka-dot-nails",
+    "cat": "art",
+    "alt": "White nails with black polka dot nail art",
+    "w": 1351,
+    "h": 1800
+  },
+  {
+    "slug": "espresso-gel-nails",
+    "cat": "colour",
+    "alt": "Espresso brown gel nails against a lace top",
+    "w": 1180,
+    "h": 1573
+  },
+  {
+    "slug": "milky-white-almond-gel",
+    "cat": "nude",
+    "alt": "Milky white almond gel nails",
+    "w": 1320,
+    "h": 1760
+  },
+  {
+    "slug": "pearl-white-almond-nails",
+    "cat": "nude",
+    "alt": "Pearl white almond nails on a steering wheel",
+    "w": 1320,
+    "h": 1760
+  },
+  {
+    "slug": "sheer-pink-almond-nails",
+    "cat": "nude",
+    "alt": "Sheer pink almond nails against a white knit",
+    "w": 1179,
+    "h": 1571
+  },
+  {
+    "slug": "ballet-pink-almond-nails",
+    "cat": "nude",
+    "alt": "Ballet pink almond nails",
+    "w": 1179,
+    "h": 1571
+  },
+  {
+    "slug": "nail-art-yes-please-special",
+    "cat": "promo",
+    "alt": "Kirby and Teen poster: Nail art? Yes, please. New set special plus free nail art for R400",
+    "w": 1013,
+    "h": 1800
+  },
+  {
+    "slug": "pamper-packages",
+    "cat": "promo",
+    "alt": "Kirby and Teen pamper packages menu",
+    "w": 1080,
+    "h": 1350
+  },
+  {
+    "slug": "the-perfect-day",
+    "cat": "promo",
+    "alt": "The perfect day does exist: new set, brow lamination, luxe pedicure, relaxing massage, bubbles and coffee",
+    "w": 1260,
+    "h": 1470
+  }
+]

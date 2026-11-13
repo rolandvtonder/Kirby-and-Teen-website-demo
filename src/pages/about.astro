@@ -1,0 +1,158 @@
+---
+import {absUrl} from '../lib/url';
+import {Image} from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import {photo, teamPhoto} from '../lib/photos';
+import {site, yearsOpen} from '../data/site';
+import {owners, team} from '../data/team';
+
+const crumbs = [{name: 'About us', href: '/about/'}];
+const salon = photo('kirby-and-teen-salon-pedicure-lounge-table-view');
+const room = photo('candlelit-massage-room');
+
+const values = [
+  {t: 'Creativity', d: 'From a perfect micro French to hand-painted plaid, we love a challenge — and we love it when you bring us a new idea.'},
+  {t: 'Quality', d: 'Careful prep, good products and patience. A set that looks good on day one should still look good on day twenty.'},
+  {t: 'Attention to detail', d: 'Clean cuticles, even shapes, neat lash lines. The small things are the whole job.'},
+  {t: 'A personal visit', d: 'We remember your shape, your colour and how you like your coffee. Every visit is about you.'},
+];
+
+const aboutSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: 'About Kirby and Teen',
+  url: absUrl('/about/', Astro.site),
+  about: {'@id': absUrl('/#business', Astro.site)},
+  mainEntity: {
+    '@type': 'Organization',
+    '@id': absUrl('/#business', Astro.site),
+    founder: [
+      {'@type': 'Person', name: 'Kirby'},
+      {'@type': 'Person', name: 'Christine'},
+    ],
+    foundingDate: String(site.established),
+  },
+};
+---
+
+<Base
+  title="About Us: Sisters Kirby & Christine and the Team"
+  description={`Meet Kirby and Christine, the sisters behind Kirby and Teen, and their team of nail, lash, brow and massage specialists in Table View since ${site.established}.`}
+  crumbs={crumbs}
+  schema={[aboutSchema]}
+>
+  <PageHero
+    eyebrow={`Our story · Est. ${site.established}`}
+    lines={[{t: 'Two sisters,'}, {t: `${yearsOpen} years,`, i: true}, {t: 'one boutique.'}]}
+    intro="Kirby and Teen is a family-run beauty boutique on Blaauwberg Road, built on creativity, quality and treating every client like a regular."
+    image="kirby-and-teen-salon-pedicure-lounge-table-view"
+    crumbs={crumbs}
+  />
+
+  <!-- Story -->
+  <section class="bg-paper py-24 md:py-36" aria-labelledby="story-title">
+    <div class="mx-auto grid max-w-[1680px] gap-14 px-5 md:grid-cols-12 md:px-14">
+      <div class="md:col-span-5" data-reveal>
+        <p class="caps text-muted">How it started</p>
+        <h2 id="story-title" class="display mt-4 text-[clamp(44px,5.4vw,96px)]">Since<br /><span class="it">{site.established}</span></h2>
+      </div>
+      <div class="prose-kt text-[18px] text-muted md:col-span-6 md:col-start-7" data-reveal style="--d:.1s">
+        <p>
+          Kirby and Teen opened in {site.established} as a small nail boutique with a simple promise: superior nail care, done with creativity, quality and attention to detail. Sisters Kirby and Christine — both beauty pros with many years of hands-on experience — wanted a place where clients feel pampered, confident and genuinely cared for.
+        </p>
+        <p>
+          {yearsOpen} years later, the boutique has grown into a full beauty destination in Table View. Alongside nails we now offer pedicures, lash extensions, brow lamination and shaping, waxing and a full massage menu, delivered by a team of fifteen.
+        </p>
+        <p>
+          What hasn't changed is the feeling. Every visit is personal: we take the time to talk through what you want, we don't rush, and we want you to walk out refreshed and feeling beautiful.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Owners -->
+  <section class="bg-sand py-24 md:py-32" aria-labelledby="owners-title">
+    <div class="mx-auto grid max-w-[1680px] items-center gap-12 px-5 md:grid-cols-12 md:px-14">
+      <div class="md:col-span-7" data-reveal>
+        <Image src={teamPhoto(owners.photo)} alt="Sisters Kirby and Christine, owners of Kirby and Teen, sitting back to back and smiling" widths={[700, 1100]} sizes="(min-width: 768px) 55vw, 100vw" class="aspect-[16/10] w-full object-cover" />
+      </div>
+      <div class="md:col-span-4 md:col-start-9" data-reveal style="--d:.1s">
+        <p class="caps text-muted">{owners.role}</p>
+        <h2 id="owners-title" class="display mt-4 text-[clamp(44px,4.6vw,80px)]">Kirby <span class="it">&amp;</span> Christine</h2>
+        <p class="mt-6 text-[18px] text-muted">{owners.bio}</p>
+        <p class="mt-6 border-l-2 border-cocoa pl-5 text-muted"><span class="caps block text-ink">Something you don't know</span>{owners.fun}</p>
+      </div>
+    </div>
+    <div class="mx-auto mt-16 grid max-w-[1680px] items-center gap-10 px-5 md:grid-cols-12 md:px-14">
+      <div class="md:col-span-3" data-reveal>
+        <Image src={teamPhoto('kirby-and-christine-as-kids')} alt="Kirby and Christine as little girls in matching swimsuits on the beach, with Table Mountain across the bay behind them" widths={[400, 700]} sizes="(min-width: 768px) 25vw, 100vw" class="aspect-[4/5] w-full object-cover" />
+      </div>
+      <p class="display text-[clamp(30px,3vw,52px)] md:col-span-7 md:col-start-5" data-reveal style="--d:.1s">
+        "This is who you get when <span class="it">you ask for the owners.</span>"
+      </p>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="bg-ink py-24 text-paper md:py-32" aria-labelledby="values-title">
+    <div class="mx-auto max-w-[1680px] px-5 md:px-14">
+      <h2 id="values-title" class="display text-[clamp(44px,5.4vw,96px)]" data-reveal>What we <span class="it">care about</span></h2>
+      <ul class="mt-14 grid gap-10 md:grid-cols-4">
+        {
+          values.map((v, i) => (
+            <li class="border-t border-paper/20 pt-6" data-reveal style={`--d:${i * 0.08}s`}>
+              <span class="caps text-paper/50">0{i + 1}</span>
+              <h3 class="display mt-3 text-[34px]">{v.t}</h3>
+              <p class="mt-3 text-paper/75">{v.d}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="bg-paper py-24 md:py-36" aria-labelledby="team-title">
+    <div class="mx-auto max-w-[1680px] px-5 md:px-14">
+      <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
+        <h2 id="team-title" class="display text-[clamp(44px,5.4vw,96px)]">Meet the <span class="it">team</span></h2>
+        <p class="max-w-md text-muted">Nail techs, a pedi queen, lash and brow specialists, a beauty therapist and the two people who keep the coffee and front desk running.</p>
+      </div>
+      <ul class="mt-14 grid grid-cols-2 gap-x-4 gap-y-12 md:grid-cols-3 xl:grid-cols-4">
+        {
+          team.map((m, i) => (
+            <li data-reveal style={`--d:${(i % 4) * 0.07}s`}>
+              <Image src={teamPhoto(m.photo)} alt={`${m.name}, ${m.role.toLowerCase()} at Kirby and Teen`} widths={[300, 600]} sizes="(min-width: 1280px) 23vw, (min-width: 768px) 31vw, 48vw" class="aspect-[4/5] w-full object-cover" style={`object-position:${m.pos ?? '50% 30%'}`} />
+              <h3 class="display mt-4 text-[30px]">{m.name}</h3>
+              <p class="caps text-muted">{m.role}</p>
+              <p class="mt-2 text-[15px] leading-relaxed text-muted">{m.bio}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- The space -->
+  <section class="bg-sand py-24 md:py-32" aria-labelledby="space-title">
+    <div class="mx-auto max-w-[1680px] px-5 md:px-14">
+      <div class="grid gap-12 md:grid-cols-12">
+        <div class="md:col-span-4" data-reveal>
+          <p class="caps text-muted">The boutique</p>
+          <h2 id="space-title" class="display mt-4 text-[clamp(44px,4.6vw,80px)]">Warm walls,<br /><span class="it">deep chairs</span></h2>
+          <p class="mt-6 text-[18px] text-muted">
+            Our space on Blaauwberg Road was designed to slow you down: warm sand walls, a chocolate-brown arch over four deep pedicure recliners, rattan lights and soft throws. Behind the wooden door is a private, candlelit room for massage, lashes and brows.
+          </p>
+        </div>
+        <div class="grid gap-[3px] md:col-span-8 md:grid-cols-3" data-reveal style="--d:.1s">
+          <Image src={salon.src} alt={salon.alt} widths={[800, 1400]} sizes="(min-width: 768px) 45vw, 100vw" class="h-full w-full object-cover md:col-span-2" />
+          <Image src={room.src} alt={room.alt} widths={[400, 700]} sizes="(min-width: 768px) 22vw, 100vw" class="aspect-[4/5] h-full w-full object-cover" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title={['Come and', 'say hello.']} />
+</Base>

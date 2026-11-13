@@ -1,0 +1,150 @@
+---
+import {absUrl, isDemo, sitePath} from '../lib/url';
+import {Image} from 'astro:assets';
+import '../styles/global.css';
+import Menu from '../components/Menu.astro';
+import Footer from '../components/Footer.astro';
+import logoCream from '../assets/brand/logo-cream.png';
+import {site, whatsappLink} from '../data/site';
+import {breadcrumbSchema, businessSchema} from '../lib/schema';
+
+interface Props {
+  /** Page title without the brand suffix */
+  title: string;
+  description: string;
+  /** Breadcrumb trail after Home, e.g. [{name: 'Services', href: '/services/'}] */
+  crumbs?: {name: string; href: string}[];
+  schema?: object[];
+  ogImage?: string;
+  noindex?: boolean;
+}
+
+const {title, description, crumbs = [], schema = [], ogImage = '/og-image.jpg', noindex = false} = Astro.props;
+const siteUrl = Astro.site!.href;
+const canonical = new URL(Astro.url.pathname, siteUrl).href;
+const fullTitle = sitePath(Astro.url.pathname) === '/' ? title : `${title} | ${site.name}`;
+const og = absUrl(ogImage, siteUrl);
+
+const graph = [
+  businessSchema(siteUrl),
+  ...(crumbs.length ? [breadcrumbSchema(siteUrl, [{name: 'Home', href: '/'}, ...crumbs])] : []),
+  ...schema,
+];
+---
+
+<!doctype html>
+<html lang="en-ZA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {(noindex || isDemo) && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#1a1512" />
+    <meta name="geo.region" content="ZA-WC" />
+    <meta name="geo.placename" content="Table View, Cape Town" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="en_ZA" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={og} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Inside the Kirby and Teen nail boutique in Table View, Cape Town" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={og} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Libre+Caslon+Condensed:ital,wght@0,400..700;1,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <slot name="head" />
+    {graph.map((g) => <script type="application/ld+json" set:html={JSON.stringify(g)} />)}
+  </head>
+  <body>
+    <a href="#main" class="caps fixed top-3 left-3 z-[70] -translate-y-20 bg-paper px-4 py-3 text-ink focus:translate-y-0">Skip to content</a>
+
+    <a href="/" class="fixed top-4 left-4 z-[55] block mix-blend-difference md:top-6 md:left-10" aria-label={`${site.name} — home`}>
+      <Image src={logoCream} alt="" width={180} widths={[180, 360]} sizes="(min-width: 768px) 180px, 132px" class="h-auto w-[132px] md:w-[180px]" loading="eager" />
+    </a>
+
+    <button
+      type="button"
+      data-menu-toggle
+      aria-controls="site-menu"
+      aria-expanded="false"
+      class="menu-btn caps fixed top-4 right-4 z-[55] flex min-h-12 items-center gap-4 bg-ink/55 px-6 py-3 text-paper backdrop-blur-md transition-colors duration-500 hover:bg-ink/80 md:top-7 md:right-8"
+    >
+      <span class="label-open">Menu</span><span class="label-close">Close</span>
+      <span class="plus text-[18px] leading-none transition-transform duration-500 ease-silk" aria-hidden="true">+</span>
+    </button>
+
+    <a
+      href={whatsappLink()}
+      target="_blank"
+      rel="noopener"
+      class="book-btn caps fixed right-4 bottom-4 z-[55] bg-paper px-7 py-4 text-ink shadow-[0_10px_40px_rgb(26_21_18/0.25)] transition-colors duration-500 hover:bg-blush md:right-8 md:bottom-7"
+    >
+      Book your <em class="font-serif text-[15px] tracking-normal normal-case">visit</em>
+    </a>
+
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <Menu />
+    <div class="grain" aria-hidden="true"></div>
+
+    <style>
+      .label-close {
+        display: none;
+      }
+      :global(html.menu-open) .menu-btn {
+        background: var(--color-paper);
+        color: var(--color-ink);
+      }
+      :global(html.menu-open) .label-open {
+        display: none;
+      }
+      :global(html.menu-open) .label-close {
+        display: inline;
+      }
+      :global(html.menu-open) .plus {
+        transform: rotate(45deg);
+      }
+      :global(html.menu-open) .book-btn {
+        background: var(--color-blush);
+      }
+    </style>
+
+    <script>
+      import {startScroll} from '../lib/scroll';
+      startScroll();
+
+      // Reveal [data-reveal] blocks the first time they scroll into view.
+      const io = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            e.target.classList.add('is-in');
+            io.unobserve(e.target);
+          }),
+        {rootMargin: '0px 0px -8% 0px'},
+      );
+      document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>

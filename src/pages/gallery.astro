@@ -1,0 +1,208 @@
+---
+import {absUrl} from '../lib/url';
+import {Image, getImage} from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import {galleryCategories, photos} from '../lib/photos';
+import {site} from '../data/site';
+
+const crumbs = [{name: 'Gallery', href: '/gallery/'}];
+// Order: nail work first, then lashes and the boutique itself.
+const order = ['art', 'nude', 'colour', 'lashbrow', 'salon'];
+const items = await Promise.all(
+  photos
+    .filter((p) => p.cat !== 'promo')
+    .sort((a, b) => order.indexOf(a.cat) - order.indexOf(b.cat))
+    .map(async (p) => ({...p, large: (await getImage({src: p.src, width: 1600, format: 'webp'})).src})),
+);
+// Interleave categories so "All" doesn't read as blocks.
+const byCat = order.map((c) => items.filter((p) => p.cat === c));
+const mixed: typeof items = [];
+for (let i = 0; mixed.length < items.length; i++) byCat.forEach((list) => list[i] && mixed.push(list[i]));
+const count = (id: string) => items.filter((p) => p.cat === id).length;
+
+const gallerySchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ImageGallery',
+  name: 'Kirby and Teen nail art, lashes and brows gallery',
+  description: 'Recent nail art, gel and acrylic sets, French tips, lash extensions and brow lamination by Kirby and Teen in Table View, Cape Town.',
+  url: absUrl('/gallery/', Astro.site),
+};
+---
+
+<Base
+  title="Nail Art Gallery: Gel, Acrylic, French & Lashes"
+  description="Browse recent nail art, gel overlays, acrylic sets, French tips, chrome, lash extensions and brow lamination by the Kirby and Teen team in Table View, Cape Town."
+  crumbs={crumbs}
+  schema={[gallerySchema]}
+>
+  <PageHero
+    eyebrow="Gallery · Recent work"
+    lines={[{t: 'Little works'}, {t: 'of art.', i: true}]}
+    intro="French tips, almond sets, chrome, bows, plaid, polka dots and lashes — a look at what our team creates every week. Screenshot your favourite and send it with your booking."
+    image="gold-chrome-nail-art"
+    crumbs={crumbs}
+  />
+
+  <section class="bg-paper py-20 md:py-28" aria-labelledby="gallery-title">
+    <div class="mx-auto max-w-[1680px] px-5 md:px-14">
+      <div class="flex flex-wrap items-end justify-between gap-8">
+        <div>
+          <h2 id="gallery-title" class="display text-[clamp(40px,4.6vw,80px)]">The <span class="it">gallery</span></h2>
+          <p class="mt-4 max-w-[52ch] text-muted">
+            Every photo here is real work by Kirby and Teen. Follow us on <a href={site.instagram} class="underline underline-offset-4" target="_blank" rel="noopener">Instagram</a> and <a href={site.facebook} class="underline underline-offset-4" target="_blank" rel="noopener">Facebook</a> for new sets every week.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-2" role="group" aria-label="Filter photos" data-filters>
+          <button type="button" class="chip" aria-pressed="true" data-filter="all">All <span class="text-muted">{items.length}</span></button>
+          {
+            galleryCategories.map((c) => (
+              <button type="button" class="chip" aria-pressed="false" data-filter={c.id}>
+                {c.label} <span class="text-muted">{count(c.id)}</span>
+              </button>
+            ))
+          }
+        </div>
+      </div>
+      <p class="sr-only" aria-live="polite" data-status></p>
+
+      <ul class="mt-12 columns-2 gap-[6px] md:columns-3 xl:columns-4" data-grid>
+        {
+          mixed.map((p, i) => (
+            <li class="mb-[6px] break-inside-avoid" data-cat={p.cat}>
+              <button type="button" class="group block w-full overflow-hidden bg-sand" data-open={i} data-large={p.large} aria-label={`View larger: ${p.alt}`}>
+                <Image src={p.src} alt={p.alt} widths={[360, 600, 900]} sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw" class="h-auto w-full transition-transform duration-[1200ms] ease-silk group-hover:scale-[1.04]" />
+              </button>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <dialog data-lightbox class="lightbox m-0 h-dvh max-h-none w-screen max-w-none bg-ink/95 p-0 text-paper backdrop:bg-ink/80" aria-label="Photo viewer">
+    <div class="flex h-full flex-col">
+      <div class="flex items-center justify-between gap-4 px-4 py-4 md:px-8">
+        <p class="caps text-paper/70" data-counter></p>
+        <button type="button" class="btn btn-paper min-h-11 px-5" data-close>Close</button>
+      </div>
+      <figure class="flex min-h-0 flex-1 flex-col items-center justify-center px-4 pb-4 md:px-20">
+        <img data-big alt="" class="max-h-full min-h-0 w-auto max-w-full object-contain" />
+        <figcaption data-caption class="mt-4 max-w-[70ch] text-center text-paper/80"></figcaption>
+      </figure>
+      <div class="flex justify-center gap-3 pb-6">
+        <button type="button" class="btn btn-line min-h-11 text-paper" data-prev aria-label="Previous photo">← Prev</button>
+        <button type="button" class="btn btn-line min-h-11 text-paper" data-next aria-label="Next photo">Next →</button>
+      </div>
+    </div>
+  </dialog>
+
+  <CtaBand title={['Seen one', 'you love?']} text="Send us a screenshot on WhatsApp with the day you would like, and we will match you with the right nail artist." message="Hi Kirby and Teen! I saw a set in your gallery I would love to book." />
+</Base>
+
+<style>
+  .chip {
+    min-height: 44px;
+    padding: 0.55rem 1.1rem;
+    border: 1px solid rgb(26 21 18 / 0.2);
+    font-size: 14px;
+    transition:
+      background-color 0.3s,
+      color 0.3s,
+      border-color 0.3s;
+  }
+  .chip:hover {
+    border-color: var(--color-ink);
+  }
+  .chip[aria-pressed='true'] {
+    background: var(--color-ink);
+    border-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+  .chip[aria-pressed='true'] span {
+    color: rgb(246 240 230 / 0.6);
+  }
+  .lightbox[open] {
+    animation: lb-in 0.4s var(--ease-silk);
+  }
+  @keyframes lb-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lightbox[open] {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  import {lockScroll} from '../lib/scroll';
+
+  const grid = document.querySelector<HTMLElement>('[data-grid]')!;
+  const cells = [...grid.querySelectorAll<HTMLLIElement>('li')];
+  const chips = [...document.querySelectorAll<HTMLButtonElement>('[data-filter]')];
+  const status = document.querySelector<HTMLElement>('[data-status]')!;
+
+  chips.forEach((chip) =>
+    chip.addEventListener('click', () => {
+      const f = chip.dataset.filter!;
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+      let shown = 0;
+      cells.forEach((li) => {
+        const on = f === 'all' || li.dataset.cat === f;
+        li.hidden = !on;
+        if (on) shown++;
+      });
+      status.textContent = `Showing ${shown} photos`;
+    }),
+  );
+
+  const dlg = document.querySelector<HTMLDialogElement>('[data-lightbox]')!;
+  const big = dlg.querySelector<HTMLImageElement>('[data-big]')!;
+  const cap = dlg.querySelector<HTMLElement>('[data-caption]')!;
+  const counter = dlg.querySelector<HTMLElement>('[data-counter]')!;
+  const buttons = [...grid.querySelectorAll<HTMLButtonElement>('[data-open]')];
+  let current = 0;
+  let opener: HTMLButtonElement | null = null;
+
+  const visible = () => buttons.filter((b) => !b.closest('li')!.hidden);
+  const show = (btn: HTMLButtonElement) => {
+    const list = visible();
+    current = list.indexOf(btn);
+    const img = btn.querySelector('img')!;
+    big.src = btn.dataset.large!;
+    big.alt = img.alt;
+    cap.textContent = img.alt;
+    counter.textContent = `${current + 1} / ${list.length}`;
+  };
+  const step = (d: number) => {
+    const list = visible();
+    show(list[(current + d + list.length) % list.length]);
+  };
+
+  buttons.forEach((b) =>
+    b.addEventListener('click', () => {
+      opener = b;
+      show(b);
+      dlg.showModal();
+      lockScroll(true);
+    }),
+  );
+  dlg.querySelector('[data-close]')!.addEventListener('click', () => dlg.close());
+  dlg.querySelector('[data-prev]')!.addEventListener('click', () => step(-1));
+  dlg.querySelector('[data-next]')!.addEventListener('click', () => step(1));
+  dlg.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') step(1);
+    if (e.key === 'ArrowLeft') step(-1);
+  });
+  dlg.addEventListener('click', (e) => {
+    if (e.target === dlg) dlg.close();
+  });
+  dlg.addEventListener('close', () => {
+    lockScroll(false);
+    opener?.focus();
+  });
+</script>

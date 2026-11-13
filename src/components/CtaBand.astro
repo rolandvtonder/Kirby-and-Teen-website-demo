@@ -1,0 +1,26 @@
+---
+import {site, whatsappLink} from '../data/site';
+interface Props {
+  title?: [string, string];
+  text?: string;
+  message?: string;
+}
+const {
+  title = ['Ready when', 'you are.'],
+  text = 'Send us a WhatsApp with the treatment you would like and a day that suits you. We will reply with the times we have open.',
+  message,
+} = Astro.props;
+---
+
+<section class="relative overflow-hidden bg-cocoa py-24 text-paper md:py-32">
+  <!-- The arch from the salon wall -->
+  <div aria-hidden="true" class="absolute -bottom-[45%] left-1/2 aspect-square w-[min(1100px,140vw)] -translate-x-1/2 rounded-full bg-ink/25"></div>
+  <div class="relative mx-auto max-w-[1100px] px-5 text-center md:px-14" data-reveal>
+    <h2 class="display text-[clamp(46px,6.4vw,112px)]">{title[0]}<br /><span class="it">{title[1]}</span></h2>
+    <p class="mx-auto mt-7 max-w-[52ch] text-paper/85">{text}</p>
+    <div class="mt-9 flex flex-wrap justify-center gap-3">
+      <a href={whatsappLink(message)} class="btn btn-paper" target="_blank" rel="noopener">Book on WhatsApp</a>
+      <a href={`tel:${site.phoneIntl}`} class="btn btn-line text-paper hover:!bg-paper hover:!text-ink">Call {site.phoneDisplay}</a>
+    </div>
+  </div>
+</section>

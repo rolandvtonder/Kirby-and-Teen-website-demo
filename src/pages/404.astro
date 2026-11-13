@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import {nav} from '../data/site';
+---
+
+<Base title="Page not found" description="This page could not be found." noindex>
+  <section class="flex min-h-svh items-center bg-ink px-5 pt-28 pb-20 text-paper md:px-14">
+    <div class="mx-auto w-full max-w-[1680px]">
+      <p class="caps text-paper/60">404</p>
+      <h1 class="display mt-4 text-[clamp(56px,9vw,160px)]">Chipped<br /><span class="it">this one.</span></h1>
+      <p class="mt-6 max-w-[48ch] text-[18px] text-paper/80">We couldn't find that page. Try one of these instead:</p>
+      <ul class="mt-8 flex flex-wrap gap-3">
+        {nav.map((n) => <li><a href={n.href} class="btn btn-line text-paper hover:!bg-paper hover:!text-ink">{n.label}</a></li>)}
+      </ul>
+    </div>
+  </section>
+</Base>

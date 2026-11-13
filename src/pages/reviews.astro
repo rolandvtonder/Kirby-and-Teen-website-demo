@@ -1,0 +1,105 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import {site} from '../data/site';
+import {googleReviewUrl, reviews} from '../data/reviews';
+
+const crumbs = [{name: 'Reviews', href: '/reviews/'}];
+const loves = [
+  {t: 'Sets that last', d: 'Careful prep and neat cuticle work mean overlays and acrylics that stay strong between refills.'},
+  {t: 'Real artistry', d: 'From clean micro French to hand-painted plaid, bows and chrome, our nail artists love a creative brief.'},
+  {t: 'A calm space', d: 'Deep recliners, warm lighting, a private massage room — and coffee or bubbly while you wait.'},
+  {t: 'People who remember you', d: 'Every visit is personal. We get to know your favourite shape, your shade and how you take your coffee.'},
+];
+---
+
+<Base
+  title="Reviews: 98% of Clients Recommend Kirby and Teen"
+  description={`${site.recommend.percent}% of the ${site.recommend.count} clients who reviewed Kirby and Teen on Facebook recommend us. Read what clients say about our nails, lashes, brows and massage in Table View, Cape Town.`}
+  crumbs={crumbs}
+>
+  <PageHero
+    eyebrow="Reviews · Client love"
+    lines={[{t: 'Leave'}, {t: 'feeling beautiful.', i: true}]}
+    intro={`${site.recommend.percent}% of the ${site.recommend.count} clients who have reviewed us on Facebook recommend Kirby and Teen. Here is why they keep coming back.`}
+    image="soft-french-nails-mirror"
+    crumbs={crumbs}
+  />
+
+  <section class="bg-paper py-24 md:py-32" aria-labelledby="score-title">
+    <div class="mx-auto grid max-w-[1680px] items-center gap-12 px-5 md:grid-cols-12 md:px-14">
+      <div class="md:col-span-5" data-reveal>
+        <h2 id="score-title" class="sr-only">Our rating</h2>
+        <p class="display text-[clamp(110px,16vw,280px)] leading-[0.8]">{site.recommend.percent}<span class="it">%</span></p>
+        <p class="caps mt-5 text-muted">Recommend us · {site.recommend.count} Facebook reviews</p>
+      </div>
+      <div class="prose-kt text-[18px] text-muted md:col-span-6 md:col-start-7" data-reveal style="--d:.1s">
+        <p>
+          Since {site.established}, Kirby and Teen has looked after clients from across Table View, Blouberg and the West Coast — and we read every single review.
+        </p>
+        <p>
+          Our reviews live on our Facebook page, where you can read every one of them in full. If you have visited us, we would be so grateful if you added yours: it helps other people in Table View and Blouberg find us.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href={site.facebookReviews} class="btn btn-ink" target="_blank" rel="noopener">Read our reviews on Facebook</a>
+          {googleReviewUrl && <a href={googleReviewUrl} class="btn btn-line text-ink" target="_blank" rel="noopener">Review us on Google</a>}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {
+    reviews.length > 0 && (
+      <section class="bg-sand py-24 md:py-32" aria-labelledby="quotes-title">
+        <div class="mx-auto max-w-[1680px] px-5 md:px-14">
+          <h2 id="quotes-title" class="display text-[clamp(44px,5.4vw,96px)]" data-reveal>
+            In their <span class="it">words</span>
+          </h2>
+          <ul class="mt-14 columns-1 gap-8 md:columns-2 xl:columns-3">
+            {reviews.map((r) => (
+              <li class="mb-8 break-inside-avoid bg-paper p-8" data-reveal>
+                <blockquote>
+                  <p class="display text-[26px] normal-case leading-tight">“{r.text}”</p>
+                  <footer class="caps mt-6 text-muted">
+                    {r.name} · {r.source}
+                    {r.service && ` · ${r.service}`}
+                  </footer>
+                </blockquote>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="bg-ink py-24 text-paper md:py-32" aria-labelledby="love-title">
+    <div class="mx-auto max-w-[1680px] px-5 md:px-14">
+      <h2 id="love-title" class="display text-[clamp(44px,5.4vw,96px)]" data-reveal>What clients <span class="it">love</span></h2>
+      <ul class="mt-14 grid gap-10 md:grid-cols-4">
+        {
+          loves.map((l, i) => (
+            <li class="border-t border-paper/20 pt-6" data-reveal style={`--d:${i * 0.08}s`}>
+              <span class="caps text-paper/50">0{i + 1}</span>
+              <h3 class="display mt-3 text-[32px]">{l.t}</h3>
+              <p class="mt-3 text-paper/75">{l.d}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="bg-paper py-24 md:py-32" aria-labelledby="leave-title">
+    <div class="mx-auto max-w-[900px] px-5 text-center md:px-14" data-reveal>
+      <h2 id="leave-title" class="display text-[clamp(40px,4.6vw,80px)]">Been in <span class="it">recently?</span></h2>
+      <p class="mx-auto mt-6 max-w-[52ch] text-[18px] text-muted">
+        Tell us how your visit went. A few words on Facebook mean a lot to our team — and if something wasn't right, message us directly on {site.phoneDisplay} and we will make it right.
+      </p>
+      <a href={site.facebookReviews} class="btn btn-ink mt-8" target="_blank" rel="noopener">Leave a review</a>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

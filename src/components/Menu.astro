@@ -1,0 +1,192 @@
+---
+import {nav, site, whatsappLink} from '../data/site';
+import {sitePath} from '../lib/url';
+const current = sitePath(Astro.url.pathname);
+const isCurrent = (href: string) => (href === '/' ? current === '/' : current.startsWith(href));
+---
+
+<!--
+  The menu: three slabs wipe in from the right one after another
+  (ink, cocoa, cream); the cream one stays and holds the links. Hovering a
+  link ripples it like heat off a hot stone — an SVG turbulence +
+  displacement filter whose strength and phase are animated per frame.
+-->
+<div id="site-menu" data-menu class="menu fixed inset-0 z-50" aria-hidden="true" inert>
+  <svg class="absolute size-0" aria-hidden="true">
+    <filter id="ripple" x="-5%" y="-30%" width="110%" height="160%">
+      <feTurbulence data-turb type="fractalNoise" baseFrequency="0.012 0.06" numOctaves="2" seed="2" result="n"></feTurbulence>
+      <feDisplacementMap data-disp in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+    </filter>
+  </svg>
+
+  <button type="button" data-menu-close tabindex="-1" aria-label="Close menu" class="absolute inset-0 cursor-default bg-ink/0 transition-colors duration-700"></button>
+
+  <div class="slab bg-ink" style="--k:0"></div>
+  <div class="slab bg-cocoa" style="--k:1"></div>
+  <nav class="slab flex flex-col justify-between overflow-y-auto bg-paper px-8 pt-24 pb-8 text-ink md:px-10" style="--k:2" aria-label="Main menu">
+    <ul data-menu-list>
+      {
+        nav.map((item, i) => (
+          <li class="menu-item" style={`--i:${i}`}>
+            <a
+              href={item.href}
+              aria-current={isCurrent(item.href) ? 'page' : undefined}
+              class="menu-link display relative inline-block py-1 text-[clamp(32px,3vw,46px)]"
+            >
+              {item.label}
+              <sup class="caps absolute top-2 -right-7 text-[10px] tracking-normal text-muted">0{i + 1}</sup>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="menu-foot mt-10 space-y-5">
+      <div>
+        <p class="caps text-muted">Book &amp; enquire</p>
+        <p class="mt-1 flex flex-wrap gap-x-5 gap-y-1">
+          <a href={whatsappLink()} class="caps text-ink hover:text-cocoa" rel="noopener" target="_blank">WhatsApp</a>
+          <a href={`tel:${site.phoneIntl}`} class="caps text-ink hover:text-cocoa">{site.phoneDisplay}</a>
+        </p>
+      </div>
+      <div>
+        <p class="caps text-muted">Socials</p>
+        <p class="mt-1 flex gap-5">
+          <a href={site.instagram} class="caps text-ink hover:text-cocoa" rel="noopener" target="_blank">Instagram</a>
+          <a href={site.facebook} class="caps text-ink hover:text-cocoa" rel="noopener" target="_blank">Facebook</a>
+        </p>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<style>
+  .slab {
+    position: absolute;
+    inset-block: 0;
+    right: 0;
+    width: min(36vw, 500px);
+    transform: translateX(104%);
+    /* Close: the reverse order, faster. */
+    transition: transform 0.8s var(--ease-wipe) calc((2 - var(--k)) * 0.06s);
+  }
+  @media (max-width: 767px) {
+    .slab {
+      width: 100%;
+    }
+  }
+  .menu:not(.is-open) {
+    pointer-events: none;
+  }
+  /* Open: ink → cocoa → cream, staggered. */
+  .menu.is-open .slab {
+    transform: none;
+    transition-delay: calc(var(--k) * 0.09s);
+  }
+  .menu.is-open [data-menu-close] {
+    background: rgb(26 21 18 / 0.35);
+  }
+  .menu-item {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.7s var(--ease-silk),
+      transform 0.7s var(--ease-silk);
+  }
+  .menu.is-open .menu-item {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(0.42s + var(--i) * 0.05s);
+  }
+  .menu-foot {
+    opacity: 0;
+    transition: opacity 0.7s;
+  }
+  .menu.is-open .menu-foot {
+    opacity: 1;
+    transition-delay: 0.7s;
+  }
+  .menu-link {
+    transition: opacity 0.3s;
+  }
+  [data-menu-list].has-hover .menu-link:not(.is-hover) {
+    opacity: 0.35;
+  }
+  .menu-link.is-hover {
+    filter: url(#ripple);
+  }
+  .menu-link[aria-current='page']::before {
+    content: '';
+    position: absolute;
+    left: -1.1rem;
+    top: 50%;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 999px;
+    background: var(--color-brass);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .slab,
+    .menu-item,
+    .menu-foot {
+      transition-duration: 0.01s !important;
+      transition-delay: 0s !important;
+    }
+  }
+</style>
+
+<script>
+  import {lockScroll} from '../lib/scroll';
+  import {reducedMotion} from '../lib/math';
+
+  const menu = document.querySelector<HTMLElement>('[data-menu]')!;
+  const toggles = document.querySelectorAll<HTMLButtonElement>('[data-menu-toggle]');
+  const list = menu.querySelector<HTMLElement>('[data-menu-list]')!;
+  const links = [...menu.querySelectorAll<HTMLAnchorElement>('.menu-link')];
+  const turb = menu.querySelector('[data-turb]')!;
+  const disp = menu.querySelector('[data-disp]')!;
+  let open = false;
+
+  const set = (next: boolean) => {
+    open = next;
+    menu.classList.toggle('is-open', open);
+    menu.toggleAttribute('inert', !open);
+    menu.setAttribute('aria-hidden', String(!open));
+    document.documentElement.classList.toggle('menu-open', open);
+    toggles.forEach((t) => t.setAttribute('aria-expanded', String(open)));
+    lockScroll(open);
+    if (open) window.setTimeout(() => links[0]?.focus({preventScroll: true}), reducedMotion() ? 0 : 450);
+    else if (menu.contains(document.activeElement)) toggles[0]?.focus();
+  };
+
+  toggles.forEach((t) => t.addEventListener('click', () => set(!open)));
+  menu.querySelector('[data-menu-close]')!.addEventListener('click', () => set(false));
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && open) set(false);
+  });
+
+  // Animate the ripple only while a link is hovered or focused.
+  let raf = 0;
+  const ripple = (target: HTMLAnchorElement | null) => {
+    cancelAnimationFrame(raf);
+    links.forEach((l) => l.classList.toggle('is-hover', l === target));
+    list.classList.toggle('has-hover', !!target);
+    if (!target || reducedMotion()) return;
+    let t = 0;
+    let amp = 0;
+    const loop = () => {
+      t += 0.016;
+      amp = Math.min(1, amp + 0.08);
+      turb.setAttribute('baseFrequency', `${(0.012 + Math.sin(t * 2.1) * 0.004).toFixed(4)} ${(0.06 + Math.cos(t * 1.7) * 0.02).toFixed(4)}`);
+      turb.setAttribute('seed', String(Math.floor(t * 12) % 50));
+      disp.setAttribute('scale', (amp * 9).toFixed(2));
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+  };
+  links.forEach((l) => {
+    l.addEventListener('mouseenter', () => ripple(l));
+    l.addEventListener('focus', () => ripple(l));
+    l.addEventListener('blur', () => ripple(null));
+  });
+  list.addEventListener('mouseleave', () => ripple(null));
+</script>

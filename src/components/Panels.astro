@@ -1,0 +1,111 @@
+---
+import {Image} from 'astro:assets';
+import {photo} from '../lib/photos';
+
+interface Props {
+  image: string;
+  label: string;
+  panels: {name: [string, string]; specs: [string, string][]; href: string; tint: string}[];
+}
+const {image, label, panels} = Astro.props;
+const p = photo(image);
+---
+
+<!--
+  Three tall panels slide in from the right one after another, each showing
+  its own third of ONE photograph of the boutique — one download, three
+  panels, and the picture lines up across all of them.
+-->
+<section data-panels class="relative bg-ink" aria-labelledby="panels-title">
+  <h2 id="panels-title" class="sr-only">{label}</h2>
+  <div class="grid h-svh min-h-[620px] grid-cols-3 gap-[3px] overflow-hidden max-md:h-auto max-md:grid-cols-1">
+    {
+      panels.map((b, i) => (
+        <a
+          href={b.href}
+          class="panel group relative block overflow-hidden max-md:h-[78svh]"
+          style={`--d:${0.12 + i * 0.16}s;background:${b.tint}`}
+        >
+          {/* One slice of the shared photo: the image is three panels wide, shifted per panel. */}
+          <Image
+            src={p.src}
+            alt={i === 0 ? p.alt : ''}
+            widths={[1200, 1600]}
+            sizes="(min-width: 768px) 100vw, 300vw"
+            class="absolute top-0 h-full max-w-none object-cover transition-transform duration-[1600ms] ease-silk group-hover:scale-[1.03]"
+            style={`width:300%;left:${-100 * i}%`}
+          />
+          <div class="absolute inset-0 bg-[linear-gradient(180deg,rgb(26_21_18/0.7),rgb(26_21_18/0.15)_45%,rgb(26_21_18/0.55))]" />
+          <div class="relative flex h-full flex-col justify-between p-7 text-paper md:p-9">
+            <div>
+              <h3 class="display text-[clamp(36px,3.4vw,60px)]">
+                <span class="block">{b.name[0]}</span>
+                <span class="it block">{b.name[1]}</span>
+              </h3>
+              <dl class="specs mt-6 space-y-3">
+                {b.specs.map(([k, v]) => (
+                  <div>
+                    <dt class="caps text-paper/65">{k}</dt>
+                    <dd class="caps text-[13px] text-paper">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+            <span class="caps inline-flex items-center gap-3 self-start border-b border-paper/50 pb-1 transition-colors group-hover:border-paper">
+              Explore <span aria-hidden="true" class="transition-transform duration-500 group-hover:translate-x-1">→</span>
+            </span>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  html:global(.js) .panel {
+    transform: translateX(calc(100% + 100vw));
+    transition: transform 1.1s var(--ease-wipe) var(--d);
+  }
+  html:global(.js) .specs {
+    opacity: 0;
+    transition: opacity 0.7s 1.4s;
+  }
+  .is-shown .panel {
+    transform: none !important;
+  }
+  .is-shown .specs {
+    opacity: 1 !important;
+  }
+  @media (max-width: 767px) {
+    /* Stacked on phones: each panel slides in as it arrives. */
+    html:global(.js) .panel {
+      --d: 0s !important;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html:global(.js) .panel {
+      transform: none;
+      transition: none;
+    }
+    html:global(.js) .specs {
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-panels]').forEach((root) => {
+    const mobile = window.matchMedia('(max-width: 767px)').matches;
+    const targets = mobile ? [...root.querySelectorAll<HTMLElement>('.panel')] : [root];
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          (mobile ? e.target : root).classList.add('is-shown');
+          io.unobserve(e.target);
+        }),
+      {threshold: mobile ? 0.15 : 0.25},
+    );
+    targets.forEach((t) => io.observe(t));
+  });
+</script>

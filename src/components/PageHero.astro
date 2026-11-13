@@ -1,0 +1,50 @@
+---
+import {Image} from 'astro:assets';
+import {photo} from '../lib/photos';
+
+interface Props {
+  lines: {t: string; i?: boolean}[];
+  eyebrow: string;
+  intro: string;
+  image: string;
+  crumbs: {name: string; href: string}[];
+  /** CSS object-position for the photo */
+  pos?: string;
+}
+const {lines, eyebrow, intro, image, crumbs, pos = 'center'} = Astro.props;
+const p = photo(image);
+---
+
+<section data-hero class="relative h-[88svh] min-h-[580px] overflow-hidden bg-ink text-paper">
+  <div data-stage class="absolute inset-0 origin-center will-change-transform">
+    <Image src={p.src} alt={p.alt} widths={[640, 1024, 1600]} sizes="100vw" loading="eager" fetchpriority="high" class="h-full w-full object-cover" style={`object-position:${pos}`} />
+    <div class="absolute inset-0 bg-[linear-gradient(90deg,rgb(26_21_18/0.78),rgb(26_21_18/0.35)_65%,rgb(26_21_18/0.15))]"></div>
+    <div class="absolute inset-x-0 bottom-0 h-1/2 bg-[linear-gradient(0deg,rgb(26_21_18/0.7),transparent)]"></div>
+
+    <div class="absolute inset-0 mx-auto flex max-w-[1680px] flex-col justify-end px-5 pb-[clamp(90px,14vh,140px)] md:px-14">
+      <p class="caps text-paper/80">{eyebrow}</p>
+      <h1 class="display mt-4 text-[clamp(50px,7vw,128px)] drop-shadow-[0_4px_30px_rgb(0_0_0/0.35)]">
+        {lines.map((l, i) => <span class:list={['block', l.i && 'it', i === 0 && 'pl-[1.2em]']}>{l.t}</span>)}
+      </h1>
+      <p class="mt-6 max-w-[560px] text-[17px] leading-relaxed text-paper/90 md:ml-[clamp(0px,12vw,220px)]">{intro}</p>
+    </div>
+  </div>
+  <nav aria-label="Breadcrumb" class="absolute bottom-5 left-5 md:left-14">
+    <ol class="caps flex flex-wrap gap-2 text-paper/70">
+      <li><a href="/" class="hover:text-paper">Home</a></li>
+      {
+        crumbs.map((c, i) => (
+          <li class="flex gap-2">
+            <span aria-hidden="true">/</span>
+            {i === crumbs.length - 1 ? <span aria-current="page" class="text-paper">{c.name}</span> : <a href={c.href} class="hover:text-paper">{c.name}</a>}
+          </li>
+        ))
+      }
+    </ol>
+  </nav>
+</section>
+
+<script>
+  import {bindHeroes} from '../lib/hero';
+  bindHeroes();
+</script>

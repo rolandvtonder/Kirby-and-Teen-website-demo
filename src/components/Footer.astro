@@ -1,0 +1,90 @@
+---
+import {fullAddress, hours, nav, site, whatsappLink} from '../data/site';
+import {services} from '../data/services';
+const year = new Date().getFullYear();
+---
+
+<footer class="relative bg-ink pt-20 pb-28 text-paper md:pb-24">
+  <div class="mx-auto max-w-[1680px] px-5 md:px-14">
+    <div class="grid gap-12 md:grid-cols-12">
+      <div class="md:col-span-4">
+        <p class="display text-[clamp(34px,3.4vw,54px)]">Your next<br /><span class="it">appointment</span></p>
+        <p class="mt-5 max-w-sm text-paper/75">Book on WhatsApp in a minute — tell us the treatment and the day, and we will confirm a time with you.</p>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href={whatsappLink()} class="btn btn-paper" target="_blank" rel="noopener">Book on WhatsApp</a>
+          <a href={`tel:${site.phoneIntl}`} class="btn btn-line text-paper hover:!bg-paper hover:!text-ink">Call {site.phoneDisplay}</a>
+        </div>
+      </div>
+
+      <div class="md:col-span-3 md:col-start-6">
+        <h2 class="caps text-paper/55">Visit</h2>
+        <address class="mt-3 not-italic text-paper/85">
+          {site.name}<br />
+          {site.address.street}<br />
+          {site.address.suburb}, {site.address.city}<br />
+          {site.address.postcode}, South Africa
+        </address>
+        <a href={site.mapsUrl} class="caps mt-3 inline-block text-brass hover:text-paper" target="_blank" rel="noopener">Get directions</a>
+        <h2 class="caps mt-8 text-paper/55">Hours</h2>
+        <dl class="mt-3 space-y-1 text-paper/85">
+          {
+            hours.map((h) => (
+              <div class="flex justify-between gap-6">
+                <dt>{h.days}</dt>
+                <dd>{h.time}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+
+      <div class="grid grid-cols-2 gap-8 md:col-span-3 md:col-start-10">
+        <div>
+          <h2 class="caps text-paper/55">Explore</h2>
+          <ul class="mt-3 space-y-1.5">
+            {nav.map((n) => <li><a href={n.href} class="text-paper/85 hover:text-brass">{n.label}</a></li>)}
+          </ul>
+        </div>
+        <div>
+          <h2 class="caps text-paper/55">Services</h2>
+          <ul class="mt-3 space-y-1.5">
+            {services.map((s) => <li><a href={`/services/${s.slug}/`} class="text-paper/85 hover:text-brass">{s.name}</a></li>)}
+          </ul>
+          <h2 class="caps mt-8 text-paper/55">Contact</h2>
+          <ul class="mt-3 space-y-1.5">
+            <li><a href={`mailto:${site.email}`} class="break-all text-paper/85 hover:text-brass">{site.email}</a></li>
+            <li><a href={site.instagram} class="text-paper/85 hover:text-brass" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href={site.facebook} class="text-paper/85 hover:text-brass" target="_blank" rel="noopener">Facebook</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- The wordmark runs edge to edge: sized by measurement, not vw. -->
+    <div class="mt-20 overflow-hidden" aria-hidden="true">
+      <span data-fit class="display inline-block whitespace-nowrap leading-[0.8] text-paper/90">Kirby <span class="it">&amp;</span> Teen</span>
+    </div>
+
+    <div class="mt-8 flex flex-col gap-2 border-t border-paper/15 pt-6 text-sm text-paper/55 md:flex-row md:justify-between">
+      <p>© {year} {site.legalName} · Est. {site.established} · {fullAddress}</p>
+      <p>Nail salon, lashes, brows, waxing &amp; massage in Table View, Cape Town</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Fit the wordmark to its container's content width, re-fit when the web
+  // font swaps in (its metrics differ from the fallback) and on resize.
+  document.querySelectorAll<HTMLElement>('[data-fit]').forEach((el) => {
+    const parent = el.parentElement!;
+    const PROBE = 100;
+    const fit = () => {
+      el.style.fontSize = `${PROBE}px`;
+      const natural = el.offsetWidth;
+      if (natural > 0) el.style.fontSize = `${((PROBE * parent.clientWidth) / natural) * 0.995}px`;
+    };
+    fit();
+    document.fonts?.ready.then(fit);
+    new ResizeObserver(fit).observe(parent);
+  });
+</script>
